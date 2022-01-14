@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Button } from "react-bootstrap";
+import { useState } from 'react';
+import { Button, Offcanvas } from "react-bootstrap";
 import CenteredSpinner from '../../components/centeredSpinner';
 import styles from '../../styles/Badge.module.css';
 import { images } from '../index';
@@ -8,6 +9,7 @@ import { images } from '../index';
 export default function Badge() {
   const router = useRouter();
   const { id } = router.query;
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   if (!id) {
     return (
@@ -31,7 +33,15 @@ export default function Badge() {
           <Image src={`/images/${image.file}`} layout="fill" objectFit="contain" />
         </div>
 
-        <Button size="lg">Claim as NFT</Button>
+        <Button size="lg" onClick={() => setShowOffcanvas(true)}>Claim as NFT</Button>
+        <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} placement="bottom" className={styles.offcanvas}>
+          <Offcanvas.Header>
+            <Offcanvas.Title>Claim as NFT</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <Button size="lg" onClick={() => setShowOffcanvas(true)}>Claim</Button>
+          </Offcanvas.Body>
+        </Offcanvas>
       </main>
     </div>
   )

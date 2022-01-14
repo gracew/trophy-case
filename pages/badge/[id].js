@@ -1,15 +1,25 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Offcanvas } from "react-bootstrap";
+import Web3Modal from "web3modal";
 import CenteredSpinner from '../../components/centeredSpinner';
 import styles from '../../styles/Badge.module.css';
 import { images } from '../index';
+
 
 export default function Badge() {
   const router = useRouter();
   const { id } = router.query;
   const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const [address, setAddress] = useState();
+
+  useEffect(() => {
+    const { ethereum } = window;
+    if (ethereum && ethereum.selectedAddress) {
+      setAddress(ethereum.selectedAddress);
+    }
+  });
 
   if (!id) {
     return (
@@ -19,11 +29,21 @@ export default function Badge() {
     );
   }
 
+  const web3Modal = new Web3Modal({ providerOptions: {} });
+  web3Modal.on('connect', info => {
+    console.log(info.selectedAddress);
+    setAddress(info.selectedAddress);
+  });
   const image = images.find(({ text }) => text === id);
+
+  async function claimNFT() {
+    // connect wallet if needed
+    const provider = await web3Modal.connect();
+    await provider.enable();
+  }
 
   return (
     <div className={styles.container}>
-
       <main className={styles.main}>
         <h1 className={styles.title}>
           {id} Achievement
@@ -39,7 +59,8 @@ export default function Badge() {
             <Offcanvas.Title>Claim as NFT</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <Button size="lg" onClick={() => setShowOffcanvas(true)}>Claim</Button>
+            {address && <Button>Send to {address}</Button>}
+            {!address && <Button size="lg" onClick={() => setShowOffcanvas(true)} onClick={claimNFT}>Claim</Button>}
           </Offcanvas.Body>
         </Offcanvas>
       </main>

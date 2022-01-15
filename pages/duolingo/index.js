@@ -1,6 +1,6 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Image from "next/image";
+import styles from "../../styles/Home.module.css";
 
 export const images = [
   {
@@ -28,7 +28,7 @@ export const images = [
     text: "Champion",
     description: "Champion badge",
   },
-]
+];
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -39,7 +39,11 @@ export default function Home() {
           {images.map(({ file, text }) => (
             <a href={`badge/${text}`} className={styles.card} key={text}>
               <div className={styles.badgeContainer}>
-                <Image src={`/images/${file}`} layout="fill" objectFit="contain" />
+                <Image
+                  src={`/images/${file}`}
+                  layout="fill"
+                  objectFit="contain"
+                />
               </div>
               <h2>{text}</h2>
             </a>

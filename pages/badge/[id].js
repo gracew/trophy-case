@@ -1,15 +1,15 @@
 import { ethers } from "ethers";
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Button, Offcanvas } from "react-bootstrap";
 import Web3Modal from "web3modal";
 import NFT from "../../artifacts/contracts/NFT.sol/NFT.json";
-import CenteredSpinner from '../../components/centeredSpinner';
+import CenteredSpinner from "../../components/centeredSpinner";
 import { nftaddress } from "../../config";
-import styles from '../../styles/Badge.module.css';
-import { images } from '../index';
+import styles from "../../styles/Badge.module.css";
+import { images } from "../duolingo/index";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 

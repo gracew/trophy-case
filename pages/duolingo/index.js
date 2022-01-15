@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Image from "next/image";
-import styles from "../../styles/Home.module.css";
+import styles from "../../styles/Duolingo.module.css";
 
 export const images = [
   {

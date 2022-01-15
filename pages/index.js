@@ -3,11 +3,31 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 
 export const images = [
-  { file: "achievement-wildfire.svg", text: "Wildfire" },
-  { file: "achievement-sage.svg", text: "Sage" },
-  { file: "achievement-scholar.svg", text: "Scholar" },
-  { file: "achievement-regal-gold.svg", text: "Regal" },
-  { file: "achievement-champion.svg", text: "Champion" },
+  {
+    file: "achievement-wildfire.svg",
+    text: "Wildfire",
+    description: "Wildfire badge",
+  },
+  {
+    file: "achievement-sage.svg",
+    text: "Sage",
+    description: "Sage badge",
+  },
+  {
+    file: "achievement-scholar.svg",
+    text: "Scholar",
+    description: "Scholar badge",
+  },
+  {
+    file: "achievement-regal-gold.svg",
+    text: "Regal",
+    description: "Regal badge",
+  },
+  {
+    file: "achievement-champion.svg",
+    text: "Champion",
+    description: "Champion badge",
+  },
 ]
 export default function Home() {
   return (

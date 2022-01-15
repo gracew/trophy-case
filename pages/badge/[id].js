@@ -9,7 +9,8 @@ import NFT from "../../artifacts/contracts/NFT.sol/NFT.json";
 import CenteredSpinner from "../../components/centeredSpinner";
 import { nftaddress } from "../../config";
 import styles from "../../styles/Badge.module.css";
-import { images } from "../duolingo/index";
+import { images as duolingoImages } from "../duolingo/index";
+import { images as appleImages } from "../apple/index";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
@@ -35,15 +36,15 @@ export default function Badge() {
   }
 
   const web3Modal = new Web3Modal({ providerOptions: {} });
-  web3Modal.on('connect', info => {
+  web3Modal.on("connect", (info) => {
     console.log(info.selectedAddress);
     setAddress(info.selectedAddress);
   });
-  const image = images.find(({ text }) => text === id);
-
+  const imageList = [...duolingoImages, ...appleImages];
+  const image = imageList.find(({ text }) => text === id);
   async function createNFT() {
     // first, upload image and metadata to IPFS
-    const blob = await fetch(`/images/${image.file}`).then(r => r.blob());
+    const blob = await fetch(`/images/${image.file}`).then((r) => r.blob());
     const imageResult = await client.add(blob);
 
     const data = {

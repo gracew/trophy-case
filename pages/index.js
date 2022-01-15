@@ -1,23 +1,31 @@
-/* pages/index.js */
-import { ethers } from "ethers";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Web3Modal from "web3modal";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css';
 
-import CreateItem from "./create-item";
-
-import NFT from "../artifacts/contracts/NFT.sol/NFT.json";
-
+export const images = [
+  { file: "achievement-wildfire.svg", text: "Wildfire" },
+  { file: "achievement-sage.svg", text: "Sage" },
+  { file: "achievement-scholar.svg", text: "Scholar" },
+  { file: "achievement-regal-gold.svg", text: "Regal" },
+  { file: "achievement-champion.svg", text: "Champion" },
+]
 export default function Home() {
-  const [loadingState, setLoadingState] = useState("not-loaded");
-  useEffect(() => {}, []);
   return (
-    <div className="flex justify-center">
-      <h1>Redeem as NFT</h1>
-      <CreateItem />
-      <div className="px-4" style={{ maxWidth: "1600px" }}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4"></div>
-      </div>
+    <div className={styles.container}>
+      <main className={styles.main}>
+        <h1 className={styles.title}>Achievements</h1>
+
+        <div className={styles.grid}>
+          {images.map(({ file, text }) => (
+            <a href={`badge/${text}`} className={styles.card} key={text}>
+              <div className={styles.badgeContainer}>
+                <Image src={`/images/${file}`} layout="fill" objectFit="contain" />
+              </div>
+              <h2>{text}</h2>
+            </a>
+          ))}
+        </div>
+      </main>
     </div>
   );
 }

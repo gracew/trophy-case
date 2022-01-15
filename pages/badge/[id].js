@@ -60,7 +60,7 @@ export default function Badge() {
           </Offcanvas.Header>
           <Offcanvas.Body>
             {address && <Button>Send to {address}</Button>}
-            {!address && <Button size="lg" onClick={() => setShowOffcanvas(true)} onClick={claimNFT}>Claim</Button>}
+            {!address && <Button size="lg" onClick={claimNFT}>Claim</Button>}
           </Offcanvas.Body>
         </Offcanvas>
       </main>

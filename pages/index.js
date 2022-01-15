@@ -17,7 +17,7 @@ export default function Home() {
 
         <div className={styles.grid}>
           {images.map(({ file, text }) => (
-            <a href={`badge/${text}`} className={styles.card}>
+            <a href={`badge/${text}`} className={styles.card} key={text}>
               <div className={styles.badgeContainer}>
                 <Image src={`/images/${file}`} layout="fill" objectFit="contain" />
               </div>

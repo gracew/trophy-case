@@ -31,7 +31,7 @@ export default function CreateItem() {
   }
 
   async function createNFT() {
-    console.log("creating market!");
+    console.log("creating NFT!");
     const { name, description } = formInput;
     if (!name || !description || !fileUrl) {
       console.log("missing info!");

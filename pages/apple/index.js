@@ -1,8 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import Head from "next/head";
 import Image from "next/image";
+import { CgAppleWatch } from "react-icons/cg";
 import styles from "../../styles/Duolingo.module.css";
 
-import { CgAppleWatch } from "react-icons/cg";
 
 export const images = [
   {
@@ -34,6 +35,10 @@ export const images = [
 export default function Home() {
   return (
     <div className={styles.container}>
+      <Head>
+        <title>Apple Health</title>
+        <link rel="icon" href="/applehealth.png" />
+      </Head>
       <main className={styles.main}>
         <h1 className={styles.titleApple}>
           <CgAppleWatch />

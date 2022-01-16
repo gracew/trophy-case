@@ -4,14 +4,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Button, Offcanvas } from "react-bootstrap";
+import { GiFactory, GiPartyPopper } from "react-icons/gi";
 import Web3Modal from "web3modal";
 import NFT from "../../artifacts/contracts/NFT.sol/NFT.json";
 import CenteredSpinner from "../../components/centeredSpinner";
 import { nftaddress } from "../../config";
 import styles from "../../styles/Badge.module.css";
-import { images as duolingoImages } from "../duolingo/index";
 import { images as appleImages } from "../apple/index";
-import { GiPartyPopper, GiFactory } from "react-icons/gi";
+import { images as duolingoImages } from "../duolingo/index";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
@@ -95,6 +95,10 @@ export default function Badge() {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>Trophy Case</title>
+        <link rel="icon" href="/trophy.png" />
+      </Head>
       <main className={styles.main}>
         <h1 className={styles.title}>
           <GiPartyPopper /> Congratulations!

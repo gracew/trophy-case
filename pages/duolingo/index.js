@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import Head from "next/head";
 import Image from "next/image";
 import styles from "../../styles/Duolingo.module.css";
 
@@ -32,6 +33,10 @@ export const images = [
 export default function Home() {
   return (
     <div className={styles.container}>
+      <Head>
+        <title>Duolingo</title>
+        <link rel="icon" href="/duolingo.png" />
+      </Head>
       <main className={styles.main}>
         <h1 className={styles.titleDuolingo}>
           <img

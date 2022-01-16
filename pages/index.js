@@ -1,5 +1,6 @@
 import Davatar from "@davatar/react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { Button, Nav } from "react-bootstrap";
 import Web3Modal from "web3modal";
@@ -107,6 +108,10 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>Trophy Case</title>
+        <link rel="icon" href="/trophy.png" />
+      </Head>
       <main className={styles.main}>
         {!address && (
           <Button onClick={connectWallet} style={{ marginTop: 50 }}>

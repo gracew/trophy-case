@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { create as ipfsHttpClient } from "ipfs-http-client";
+import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

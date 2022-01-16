@@ -36,13 +36,16 @@ export default function Home() {
   });
 
   useEffect(() => {
+    async function cleanData() {
+      const badges = await getBadgesForAddress(address);
+      const metadatas = await Promise.all(badges.map((badge) => fetch(badge.token_uri).then(m => m.json())));
+      return badges.map((b, i) => ({ ...b, metadata: metadatas[i] }));
+    }
+
     if (address) {
-      getBadgesForAddress(address).then((badges) => {
-        const cleaned = badges.map((badge) => {
-          const metadata = JSON.parse(badge.metadata);
-          return { ...badge, metadata };
-        });
-        setBadges(cleaned);
+      cleanData().then(data => {
+        console.log(data);
+        setBadges(data);
       });
 
       // lookup ENS

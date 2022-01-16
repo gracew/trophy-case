@@ -9,7 +9,6 @@ import { GiFactory, GiPartyPopper } from "react-icons/gi";
 import Web3Modal from "web3modal";
 import NFT from "../../artifacts/contracts/NFT.sol/NFT.json";
 import CenteredSpinner from "../../components/centeredSpinner";
-import { duolingoNftAddress, appleNftAddress } from "../../config";
 import styles from "../../styles/Badge.module.css";
 import { images as appleImages } from "../apple/index";
 import { images as duolingoImages } from "../duolingo/index";
@@ -71,13 +70,13 @@ export default function Badge() {
     // when minting begins, show spinner
     setTxPending(true);
 
-    console.log("contract address: ", duolingoNftAddress);
+    console.log("contract address: ", image.address);
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
 
     // Step 1: Load the NFT contract
-    const contract = new ethers.Contract(duolingoNftAddress, NFT.abi, signer);
+    const contract = new ethers.Contract(image.address, NFT.abi, signer);
 
     // Step 2: give it the URI
     let transaction = await contract.mintNFT(url);
@@ -91,7 +90,7 @@ export default function Badge() {
     setTxPending(false);
     setOpenSeaUrl(
       "https://testnets.opensea.io/assets/mumbai/" +
-        duolingoNftAddress +
+        image.address +
         "/" +
         tokenId
     );

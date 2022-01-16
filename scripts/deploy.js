@@ -16,7 +16,7 @@ async function main() {
   // We get the contract to deploy
 
   const NFT = await hre.ethers.getContractFactory("NFT");
-  const nft = await NFT.deploy("Duolingo Badges", "DUO");
+  const nft = await NFT.deploy("Apple Watch Badges", "WATCH");
   await nft.deployed();
   console.log("nft collection deployed to:", nft.address);
 }

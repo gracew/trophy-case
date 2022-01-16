@@ -9,10 +9,11 @@ import { GiFactory, GiPartyPopper } from "react-icons/gi";
 import Web3Modal from "web3modal";
 import NFT from "../../artifacts/contracts/NFT.sol/NFT.json";
 import CenteredSpinner from "../../components/centeredSpinner";
-import { nftaddress } from "../../config";
+import { duolingoNftAddress, appleNftAddress } from "../../config";
 import styles from "../../styles/Badge.module.css";
 import { images as appleImages } from "../apple/index";
 import { images as duolingoImages } from "../duolingo/index";
+import { GiPartyPopper, GiFactory, GiSailboat } from "react-icons/gi";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
@@ -71,12 +72,13 @@ export default function Badge() {
     // when minting begins, show spinner
     setTxPending(true);
 
+    console.log("contract address: ", duolingoNftAddress);
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
 
     // Step 1: Load the NFT contract
-    const contract = new ethers.Contract(nftaddress, NFT.abi, signer);
+    const contract = new ethers.Contract(duolingoNftAddress, NFT.abi, signer);
 
     // Step 2: give it the URI
     let transaction = await contract.mintNFT(url);
@@ -89,7 +91,10 @@ export default function Badge() {
     await transaction.wait();
     setTxPending(false);
     setOpenSeaUrl(
-      "https://testnets.opensea.io/assets/mumbai/" + nftaddress + "/" + tokenId
+      "https://testnets.opensea.io/assets/mumbai/" +
+        duolingoNftAddress +
+        "/" +
+        tokenId
     );
     setMintingCompleted(true);
   }
@@ -147,12 +152,12 @@ export default function Badge() {
               <GiFactory /> Mint NFT
             </Button>
             {mintingCompleted ? (
-              <h3>
+              <p style={{ marginTop: "10%" }}>
                 Your badge has been minted as an NFT!{" "}
                 <a href={openSeaUrl} target="_blank" rel="noreferrer">
-                  View on OpenSea
+                  <GiSailboat /> View on OpenSea
                 </a>
-              </h3>
+              </p>
             ) : (
               ""
             )}

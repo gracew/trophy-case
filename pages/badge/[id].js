@@ -11,6 +11,7 @@ import { nftaddress } from "../../config";
 import styles from "../../styles/Badge.module.css";
 import { images as duolingoImages } from "../duolingo/index";
 import { images as appleImages } from "../apple/index";
+import { GiPartyPopper, GiFactory } from "react-icons/gi";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
@@ -19,7 +20,9 @@ export default function Badge() {
   const { id } = router.query;
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [address, setAddress] = useState();
-
+  const [txPending, setTxPending] = useState(false);
+  const [mintingCompleted, setMintingCompleted] = useState(false);
+  const [openSeaUrl, setOpenSeaUrl] = useState();
   useEffect(() => {
     const { ethereum } = window;
     if (ethereum && ethereum.selectedAddress) {
@@ -64,6 +67,9 @@ export default function Badge() {
   }
 
   async function mintNFT(url) {
+    // when minting begins, show spinner
+    setTxPending(true);
+
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
@@ -75,33 +81,79 @@ export default function Badge() {
     let transaction = await contract.mintNFT(url);
     let tx = await transaction.wait();
     let event = tx.events[0];
+    console.log("transaction event: ", event);
     let value = event.args[2];
     let tokenId = value.toNumber();
     console.log("token id: ", tokenId);
     await transaction.wait();
+    setTxPending(false);
+    setOpenSeaUrl(
+      "https://testnets.opensea.io/assets/mumbai/" + nftaddress + "/" + tokenId
+    );
+    setMintingCompleted(true);
   }
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          {id} Achievement
+          <GiPartyPopper /> Congratulations!
         </h1>
+        <h3 className={styles.title}>You have earned a badge.</h3>
 
         <div className={styles.badgeContainer}>
-          <Image src={`/images/${image.file}`} layout="fill" objectFit="contain" />
+          <Image
+            src={`/images/${image.file}`}
+            layout="fill"
+            objectFit="contain"
+          />
         </div>
-
-        <Button size="lg" onClick={() => setShowOffcanvas(true)}>Claim as NFT</Button>
-        <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} placement="bottom" className={styles.offcanvas}>
+        {/* <h3 className={styles.title}>{id}</h3> */}
+        <p className={styles.title}>{image.description}</p>
+        <Button variant="dark" size="lg" onClick={() => setShowOffcanvas(true)}>
+          Claim as NFT
+        </Button>
+        <Offcanvas
+          show={showOffcanvas}
+          onHide={() => setShowOffcanvas(false)}
+          placement="bottom"
+          className={styles.offcanvas}
+        >
           <Offcanvas.Header>
-            <Offcanvas.Title>Claim as NFT</Offcanvas.Title>
+            <Offcanvas.Title>Claim your badge as an NFT?</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <Button size="lg" onClick={createNFT}>Claim</Button>
+            {txPending ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CenteredSpinner></CenteredSpinner>
+                <p>Minting...</p>
+              </div>
+            ) : (
+              ""
+            )}
+
+            <Button size="lg" variant="outline-success" onClick={createNFT}>
+              <GiFactory /> Mint NFT
+            </Button>
+            {mintingCompleted ? (
+              <h3>
+                Your badge has been minted as an NFT!{" "}
+                <a href={openSeaUrl} target="_blank" rel="noreferrer">
+                  View on OpenSea
+                </a>
+              </h3>
+            ) : (
+              ""
+            )}
           </Offcanvas.Body>
         </Offcanvas>
       </main>
     </div>
-  )
+  );
 }

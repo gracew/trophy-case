@@ -1,5 +1,7 @@
 .centeredSpinner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3%;
+  padding: 10px;
+}

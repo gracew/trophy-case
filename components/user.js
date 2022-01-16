@@ -1,5 +1,5 @@
+import Davatar from "@davatar/react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "../styles/UserComponent.module.css";
 
@@ -15,9 +15,7 @@ export default function User(props) {
   })
   return (
     <div className={styles.user}>
-      <div className={styles.userContainer}>
-        <Image src="/images/mcallister.png" layout="fill" objectFit="contain" />
-      </div>
+      <Davatar size={80} address={props.address} />
       <div className={styles.userAddress}>{ens ? ens : props.address}</div>
     </div>
   );

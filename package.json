@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@davatar/react": "^1.8.1",
     "@openzeppelin/contracts": "^4.4.2",
     "axios": "^0.24.0",
     "bootstrap": "5.1.3",

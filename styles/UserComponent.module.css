@@ -7,19 +7,11 @@
   margin: 15px;
 }
 
-.userContainer {
-  width: 80px;
-  height: 80px;
-  border-radius: 50px;
-  overflow: hidden;
-  position: relative;
-  margin-bottom: 10px;
-}
-
 .userAddress {
   font-size: 14px;
   font-weight: 500;
   overflow: hidden;
   width: 100px;
   text-overflow: ellipsis;
+  margin-top: 10px;
 }

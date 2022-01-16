@@ -1,5 +1,5 @@
+import Davatar from "@davatar/react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Button, Nav } from "react-bootstrap";
 import Web3Modal from "web3modal";
@@ -94,9 +94,7 @@ export default function Home() {
         {address &&
           <div className={styles.mainUserContainer}>
             <div>
-              <div className={styles.mainUserImageContainer}>
-                <Image src="/images/mcallister.png" layout="fill" objectFit="contain" />
-              </div>
+              <Davatar size={170} address={address} />
               <h1 className={styles.title}>{ens ? ens : address}</h1>
             </div>
           </div>}

@@ -1,5 +1,5 @@
 .container {
-  background: #2B3566;
+  background: #2b3566;
 }
 
 .container h1 {
@@ -18,20 +18,21 @@
   margin-top: 25px;
 }
 
-.activeNavLink, .activeNavLink:focus {
+.activeNavLink,
+.activeNavLink:focus {
   font-size: 18px;
   font-weight: 700;
-  color: #45D3C3;
+  color: #45d3c3;
 }
 
 .navLink {
   font-size: 18px;
   font-weight: 500;
-  color: #6F7EB9;
+  color: #6f7eb9;
 }
 
 .navLink:hover {
-  color: #45D3C3;
+  color: #45d3c3;
 }
 
 .grid {
@@ -43,7 +44,7 @@
 }
 
 .mainUserContainer {
-  background: #3A4579;
+  background: #3a4579;
   box-shadow: 0px 4px 80px rgba(0, 0, 0, 0.2);
   border-radius: 0px 0px 40px 40px;
   width: 100%;

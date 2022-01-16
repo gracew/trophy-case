@@ -11,6 +11,7 @@ import { nftaddress } from "../../config";
 import styles from "../../styles/Badge.module.css";
 import { images as duolingoImages } from "../duolingo/index";
 import { images as appleImages } from "../apple/index";
+import { GiPartyPopper, GiFactory } from "react-icons/gi";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
@@ -95,7 +96,10 @@ export default function Badge() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1 className={styles.title}>{id} Achievement</h1>
+        <h1 className={styles.title}>
+          <GiPartyPopper /> Congratulations!
+        </h1>
+        <h3 className={styles.title}>You have earned a badge.</h3>
 
         <div className={styles.badgeContainer}>
           <Image
@@ -104,8 +108,9 @@ export default function Badge() {
             objectFit="contain"
           />
         </div>
-
-        <Button size="lg" onClick={() => setShowOffcanvas(true)}>
+        {/* <h3 className={styles.title}>{id}</h3> */}
+        <p className={styles.title}>{image.description}</p>
+        <Button variant="dark" size="lg" onClick={() => setShowOffcanvas(true)}>
           Claim as NFT
         </Button>
         <Offcanvas
@@ -115,20 +120,26 @@ export default function Badge() {
           className={styles.offcanvas}
         >
           <Offcanvas.Header>
-            <Offcanvas.Title>Claim as NFT</Offcanvas.Title>
+            <Offcanvas.Title>Claim your badge as an NFT?</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
             {txPending ? (
-              <div>
-                <h2>Minting...</h2>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <CenteredSpinner></CenteredSpinner>
+                <p>Minting...</p>
               </div>
             ) : (
               ""
             )}
 
-            <Button size="lg" onClick={createNFT}>
-              Claim
+            <Button size="lg" variant="outline-success" onClick={createNFT}>
+              <GiFactory /> Mint NFT
             </Button>
             {mintingCompleted ? (
               <h3>

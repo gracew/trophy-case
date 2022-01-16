@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button, Nav } from "react-bootstrap";
 import Web3Modal from "web3modal";
 import Badge from "../components/badge";
+import User from "../components/user";
 import styles from "../styles/Home.module.css";
 
 function getBadgesForAddress(address) {
@@ -95,21 +96,22 @@ export default function Home() {
           </div>}
 
         {address && <div>
-          <Nav className={styles.nav} onSelect={setTab}>
+          <Nav className={styles.nav} activeKey="badges" onSelect={setTab}>
             <Nav.Item>
-              <Nav.Link eventKey="badges">My Badges</Nav.Link>
+              <Nav.Link eventKey="badges" className={tab === "badges" ? styles.activeNavLink : styles.navLink}>My Badges</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="similar">Similar to You</Nav.Link>
+              <Nav.Link eventKey="similar" className={tab === "similar" ? styles.activeNavLink : styles.navLink}>Similar to You</Nav.Link>
             </Nav.Item>
           </Nav>
           <div className={styles.grid}>
             {tab === "badges" && badges.filter(badge => badge.metadata).map(badge =>
-              <a key={badge.token_id} href={`https://testnets.opensea.io/assets/mumbai/${badge.token_address}/${badge.token_id}`}>
+              <a key={badge.token_id} className={styles.badgeLink}
+                href={`https://testnets.opensea.io/assets/mumbai/${badge.token_address}/${badge.token_id}`}>
                 <Badge contractName={badge.name} metadata={badge.metadata} />
               </a>
             )}
-            {tab === "similar" && similar.map(similar => <div key={similar[0]}>{similar[0]}</div>)}
+            {tab === "similar" && similar.map(similar => <User key={similar[0]} address={similar[0]} />)}
           </div>
         </div>}
       </main>

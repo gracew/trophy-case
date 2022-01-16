@@ -18,6 +18,22 @@
   margin-top: 25px;
 }
 
+.activeNavLink, .activeNavLink:focus {
+  font-size: 18px;
+  font-weight: 700;
+  color: #45D3C3;
+}
+
+.navLink {
+  font-size: 18px;
+  font-weight: 500;
+  color: #6F7EB9;
+}
+
+.navLink:hover {
+  color: #45D3C3;
+}
+
 .grid {
   display: flex;
   align-items: center;
@@ -37,6 +53,21 @@
   padding: 50px 50px 30px 50px;
 }
 
+.mainUserContainer > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  overflow: hidden;
+  width: 250px;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+
 .mainUserImageContainer {
   width: 170px;
   height: 170px;
@@ -47,3 +78,6 @@
   margin-bottom: 15px;
 }
 
+.badgeLink {
+  text-decoration: none;
+}

@@ -2,7 +2,8 @@
 
 Created at [NFT Hack 2022](https://showcase.ethglobal.com/nfthack2022/trophy-case): A dead simple way for developers to let users mint NFTs from in-app achievements, and a wallet for users to view all their achievements & discover others with similar interests.
 
-🎥 Demo (click to view)
+🎥 Demo (click to view):
+
 [![Youtube Demo](https://img.youtube.com/vi/w-SLXECOgLc/0.jpg)](https://www.youtube.com/watch?v=w-SLXECOgLc)
 
 

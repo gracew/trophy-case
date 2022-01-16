@@ -13,7 +13,6 @@ import { duolingoNftAddress, appleNftAddress } from "../../config";
 import styles from "../../styles/Badge.module.css";
 import { images as appleImages } from "../apple/index";
 import { images as duolingoImages } from "../duolingo/index";
-import { GiPartyPopper, GiFactory, GiSailboat } from "react-icons/gi";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 

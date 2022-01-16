@@ -6,20 +6,21 @@ import Web3Modal from "web3modal";
 import Badge from "../components/badge";
 import styles from "../styles/Home.module.css";
 
+function getBadgesForAddress(address) {
+  return fetch(`https://deep-index.moralis.io/api/v2/${address}/nft?chain=mumbai&format=decimal`, {
+    headers: {
+      'X-API-Key': process.env.NEXT_PUBLIC_MORALIS_KEY,
+    }
+  }).then(res => res.json())
+    .then(parsed => parsed.result);
+}
+
 export default function Home() {
   const [badges, setBadges] = useState([]);
   const [address, setAddress] = useState();
   const [ens, setEns] = useState();
-
-  useEffect(() => {
-    fetch('https://deep-index.moralis.io/api/v2/0x06e6f7d896696167b2da9281ebaf8a14580fbfcc/nft?chain=mumbai&format=decimal', {
-      headers: {
-        'X-API-Key': process.env.NEXT_PUBLIC_MORALIS_KEY,
-        'accept': 'application/json',
-      }
-    }).then(res => res.json())
-      .then(parsed => setBadges(parsed.result));
-  }, [])
+  const [tab, setTab] = useState("badges");
+  const [similar, setSimilar] = useState([]);
 
   useEffect(() => {
     const { ethereum } = window;
@@ -30,15 +31,48 @@ export default function Home() {
 
   useEffect(() => {
     if (address) {
+      getBadgesForAddress(address).then(setBadges);
+
+      // lookup ENS
       fetch(`https://deep-index.moralis.io/api/v2/resolve/${address}/reverse`, {
         headers: {
           'X-API-Key': process.env.NEXT_PUBLIC_MORALIS_KEY,
-          'accept': 'application/json',
         }
       }).then(res => res.json())
         .then(parsed => setEns(parsed.name));
     }
   }, [address]);
+
+  useEffect(() => {
+    similarAddresses();
+  }, [badges]);
+
+  async function similarAddresses() {
+    const contracts = new Set(badges.map(badge => badge.token_address));
+
+    // get other holders of the same token
+    const users = new Set();
+    await Promise.all(Array.from(contracts).map(async contract => {
+      const parsed = await fetch(`https://deep-index.moralis.io/api/v2/nft/${contract}/owners?chain=mumbai&format=decimal`, {
+        headers: {
+          'X-API-Key': process.env.NEXT_PUBLIC_MORALIS_KEY,
+        }
+      }).then(res => res.json());
+      parsed.result.forEach(res => users.add(res.owner_of));
+    }));
+
+    // get those users' badges
+    const similarity = {};
+    await Promise.all(Array.from(users).filter(user => user !== address).map(async user => {
+      const userBadges = await getBadgesForAddress(user);
+      const userContracts = new Set(userBadges.map(badge => badge.token_address));
+      const numShared = Array.from(userContracts).filter(i => contracts.has(i)).length;
+      similarity[user] = numShared;
+    }));
+
+    // rank by who has the most shared collections
+    setSimilar(Object.entries(similarity).sort((a, b) => b[1] - a[1]));
+  }
 
   async function connectWallet() {
     const web3Modal = new Web3Modal({ providerOptions: {} });
@@ -61,20 +95,21 @@ export default function Home() {
           </div>}
 
         {address && <div>
-          <Nav className={styles.nav}>
+          <Nav className={styles.nav} onSelect={setTab}>
             <Nav.Item>
-              <Nav.Link>My Badges</Nav.Link>
+              <Nav.Link eventKey="badges">My Badges</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link>Similar to You</Nav.Link>
+              <Nav.Link eventKey="similar">Similar to You</Nav.Link>
             </Nav.Item>
           </Nav>
           <div className={styles.grid}>
-            {badges.filter(badge => badge.metadata).map(badge =>
+            {tab === "badges" && badges.filter(badge => badge.metadata).map(badge =>
               <a key={badge.token_id} href={`https://testnets.opensea.io/assets/mumbai/${badge.token_address}/${badge.token_id}`}>
                 <Badge contractName={badge.name} metadata={badge.metadata} />
               </a>
             )}
+            {tab === "similar" && similar.map(similar => <div key={similar[0]}>{similar[0]}</div>)}
           </div>
         </div>}
       </main>

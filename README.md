@@ -1,7 +1,8 @@
 # Trophy Case
 
-Created at(NFT Hack 2022)[https://showcase.ethglobal.com/nfthack2022/trophy-case]: A dead simple way for developers to let users mint NFTs from in-app achievements, and a wallet for users to view all their achievements & discover others with similar interests.
+Created at [NFT Hack 2022](https://showcase.ethglobal.com/nfthack2022/trophy-case): A dead simple way for developers to let users mint NFTs from in-app achievements, and a wallet for users to view all their achievements & discover others with similar interests.
 
+🎥 Demo (click to view)
 [![Youtube Demo](https://img.youtube.com/vi/w-SLXECOgLc/0.jpg)](https://www.youtube.com/watch?v=w-SLXECOgLc)
 
 
@@ -13,20 +14,27 @@ Our project simplifies the process of NFT integration for developers, and also s
 
 End users can enjoy their achievements from many apps & interests in a single place, as well as discover similar wallet addresses (finding other users interested in both learning French and distance running!) based on shared collections.
 
+![alt text](https://github.com/gracew/trophy-case/blob/main/public/images/product/mobile1.png)
+![alt text](https://github.com/gracew/trophy-case/blob/main/public/images/product/mobile2.png)
+
+
+
 ## How It’s Made
 
 We decided to build Trophy Case on Polygon to lower friction for developers and users new to web3 (in terms of gas fees and transaction speed). NFT metadata and image art are stored on IPFS. We used Moralis’ Web3 NFT API to find other wallet addresses with similar NFTs, and to reverse lookup wallet addresses to ENS names. The Moralis API was immensely helpful as some of the other NFT APIs we looked at (OpenSea, Rarible) did not include Polygon support. Resolving the ENS name was also simpler using Moralis than using ethers.js. Finally, we used the @davatar/react package to show ENS avatars when available.
 
 We’re proud that our project shows the end to end flow of how existing web2 apps might integrate NFTs, the simplicity of minting those NFTs, and additional use cases that can be built on top of these achievement NFTs, like social discovery.
 
-## Web3 Components
+![alt text](https://github.com/gracew/trophy-case/blob/main/public/images/product/mobile3.png)
+
+## Web3 Technologies
 
 - ENS — We resolve wallet addresses to ENS usernames and show avatars as part of our social discovery workflow.
 - Moralis — We use Moralis’ Web3 NFT API to determine wallet addresses with similar NFTs to the connected user.
 - OpenSea — We make it dead simple for web2 developers to add NFT minting functionality to their apps.
 - Polygon — We chose to deploy our NFT contracts on Polygon in order to reduce friction (gas fees and transaction speed) for developers & end users new to web3.
 
-### Tech Stack
+### Stack
 
 - ethereum developer tools: ethers.js, hardhat, openzeppelin
 - blockchain networks: polygon

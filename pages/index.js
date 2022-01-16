@@ -9,6 +9,7 @@ import styles from "../styles/Home.module.css";
 export default function Home() {
   const [badges, setBadges] = useState([]);
   const [address, setAddress] = useState();
+  const [ens, setEns] = useState();
 
   useEffect(() => {
     fetch('https://deep-index.moralis.io/api/v2/0x06e6f7d896696167b2da9281ebaf8a14580fbfcc/nft?chain=mumbai&format=decimal', {
@@ -23,9 +24,21 @@ export default function Home() {
   useEffect(() => {
     const { ethereum } = window;
     if (ethereum && ethereum.selectedAddress) {
-      // setAddress(ethereum.selectedAddress);
+      setAddress(ethereum.selectedAddress);
     }
   });
+
+  useEffect(() => {
+    if (address) {
+      fetch(`https://deep-index.moralis.io/api/v2/resolve/${address}/reverse`, {
+        headers: {
+          'X-API-Key': process.env.NEXT_PUBLIC_MORALIS_KEY,
+          'accept': 'application/json',
+        }
+      }).then(res => res.json())
+        .then(parsed => setEns(parsed.name));
+    }
+  }, [address]);
 
   async function connectWallet() {
     const web3Modal = new Web3Modal({ providerOptions: {} });
@@ -43,7 +56,7 @@ export default function Home() {
               <div className={styles.mainUserImageContainer}>
                 <Image src="/images/mcallister.png" layout="fill" objectFit="contain" />
               </div>
-              <h1 className={styles.title}>sammy.eth</h1>
+              <h1 className={styles.title}>{ens ? ens : address}</h1>
             </div>
           </div>}
 

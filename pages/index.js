@@ -32,7 +32,13 @@ export default function Home() {
 
   useEffect(() => {
     if (address) {
-      getBadgesForAddress(address).then(setBadges);
+      getBadgesForAddress(address).then(badges => {
+        const cleaned = badges.map(badge => {
+          const metadata = JSON.parse(badge.metadata);
+          return { ...badge, metadata };
+        });
+        setBadges(cleaned);
+      });
 
       // lookup ENS
       fetch(`https://deep-index.moralis.io/api/v2/resolve/${address}/reverse`, {
@@ -105,7 +111,7 @@ export default function Home() {
             </Nav.Item>
           </Nav>
           <div className={styles.grid}>
-            {tab === "badges" && badges.filter(badge => badge.metadata).map(badge =>
+            {tab === "badges" && badges.filter(badge => badge.metadata && badge.metadata.image.startsWith("https")).map(badge =>
               <a key={badge.token_id} className={styles.badgeLink}
                 href={`https://testnets.opensea.io/assets/mumbai/${badge.token_address}/${badge.token_id}`}>
                 <Badge contractName={badge.name} metadata={badge.metadata} />

@@ -71,8 +71,8 @@ export default function Home() {
           </Nav>
           <div className={styles.grid}>
             {badges.filter(badge => badge.metadata).map(badge =>
-              <a href={`https://testnets.opensea.io/assets/mumbai/${badge.token_address}/${badge.token_id}`}>
-                <Badge key={badge.token_id} contractName={badge.name} metadata={badge.metadata} />
+              <a key={badge.token_id} href={`https://testnets.opensea.io/assets/mumbai/${badge.token_address}/${badge.token_id}`}>
+                <Badge contractName={badge.name} metadata={badge.metadata} />
               </a>
             )}
           </div>

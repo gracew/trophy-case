@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Button, Offcanvas } from "react-bootstrap";
-import { GiFactory, GiPartyPopper } from "react-icons/gi";
+import { GiFactory, GiPartyPopper, GiSailboat } from "react-icons/gi";
 import Web3Modal from "web3modal";
 import NFT from "../../artifacts/contracts/NFT.sol/NFT.json";
 import CenteredSpinner from "../../components/centeredSpinner";
